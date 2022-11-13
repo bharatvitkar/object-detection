@@ -1,5 +1,6 @@
 img="";
 status1="";
+objects=[];
 
 function preload()
 {
@@ -26,6 +27,9 @@ function gotResult(error,results)
     console.log(error);
   }
   console.log(results);
+
+  objects=results;
+
 }
 
 
@@ -33,16 +37,24 @@ function gotResult(error,results)
 function draw()
 {
   image(img,0,0,640,420);
-  fill("#f705a7");
-  text("dog",45,75);
-  noFill();
-  stroke("#f705a7");
-  rect(30,60,450,350);
 
-  fill("#fffb1f");
-  text("cat",320,120);
-  noFill();
-  stroke("#fffb1f");
-  rect(300,90,270,320);
+  if(status1 != "")
+  {
+    for(i=0;i<objects.length;i++)
+    {
+      document.getElementById("status").innerHTML="status : object detected";
+      fill("#f705a7");
+      percent=floor(objects[i].confidence * 100);
+      text(objects[i].label+ " "+percent+"%",objects[i].x,objects[i].y);
+      noFill();
+      stroke("#f705a7");
+      rect(objects[i].x,objects[i].y,objects[i].width,objects[i].height);
+    }
+  }
+  //fill("#f705a7");
+  //text("dog",45,75);
+  //noFill();
+  //stroke("#f705a7");
+  //rect(30,60,450,350);
 
 }
